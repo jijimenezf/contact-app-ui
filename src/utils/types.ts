@@ -10,30 +10,30 @@ export type Contact = {
     phone: string | undefined;
     address: string | undefined;
     status: "Active" | "Inactive";
-    photoUrl: string | undefined;
+    photoUrl?: string;
 };
 
-export type CreateUserResponse = {
-    path: string;
-};
+export type SaveContact = Omit<Contact, "id" | "photoUrl">;
 
 export type PageRequest = {
     page?: number;
     size?: number;
 };
 
-export type ContactRespose = {
+export type ContactsResponse = {
     content: Contact[] | [];
     totalPages: number;
 };
 
 export type ContactListProps = {
-    data: ContactRespose;
+    data: ContactsResponse;
     currentPage: number;
-    getAllContacts: (pageReq: PageRequest) => ContactRespose;
+    fetchAllContacts: (pageReq: PageRequest) => Promise<void>;
 };
 
 export type ContactDetailProps = {
     updateContact: (contact: Contact) => Promise<void>;
     updateImage: (formData: FormData) => Promise<void>;
 };
+
+export const SIZE = 10;

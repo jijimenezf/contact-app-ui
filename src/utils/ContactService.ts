@@ -1,5 +1,5 @@
 import axios from "axios";
-import { type Contact, CreateUserResponse, PageRequest, ContactRespose } from "./types";
+import { type Contact, PageRequest, ContactsResponse, SaveContact } from "./types";
 
 const API_URL = "http://localhost:8080/contacts";
 const HEADERS = {
@@ -9,12 +9,12 @@ const HEADERS = {
     }
 };
 
-export async function saveContact(contact: Contact) {
-    return await axios.post<CreateUserResponse>(API_URL, contact, HEADERS);
+export async function saveContact(contact: SaveContact) {
+    return await axios.post<Contact>(API_URL, contact, HEADERS);
 }
 
-export async function getAllContacts({ page = 0, size = 10 }: PageRequest) {
-    return await axios.get<ContactRespose>(`${API_URL}?page=${page}&size=${size}`, HEADERS);
+export async function getAllContacts({ page, size }: PageRequest) {
+    return await axios.get<ContactsResponse>(`${API_URL}?page=${page}&size=${size}`, HEADERS);
 }
 
 export async function getContact(id: string) {
