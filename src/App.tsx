@@ -157,29 +157,12 @@ function App() {
         toggleModal={toggleModal}
         numberOfContacts={data?.content.length ?? 0}
       />
-      <main className="main">
-        <div className="container">
+      <main className='main'>
+        <div className='container'>
           <Routes>
-            <Route path="/" element={<Navigate to={"/contacts"} />} />
-            <Route
-              path="/contacts"
-              element={
-                <ContactList
-                  data={data}
-                  currentPage={currentPage}
-                  fetchAllContacts={fetchContacts}
-                />
-              }
-            />
-            <Route
-              path="/contacts/:id"
-              element={
-                <ContactDetail
-                  updateContact={updateContact}
-                  updateImage={updateImage}
-                />
-              }
-            />
+            <Route path='/' element={<Navigate to={'/contacts'} />} />
+            <Route path="/contacts" element={<ContactList data={data} currentPage={currentPage} fetchAllContacts={fetchContacts} />} />
+            <Route path="/contacts/:id" element={<ContactDetail updateContact={updateContact} updateImage={updateImage} />} />
           </Routes>
         </div>
       </main>

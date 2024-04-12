@@ -36,4 +36,4 @@ export type ContactDetailProps = {
     updateImage: (formData: FormData) => Promise<void>;
 };
 
-export const SIZE = 10;
+export const SIZE = 5;
