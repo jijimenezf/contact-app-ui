@@ -1,11 +1,16 @@
 # React + TypeScript + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Credits
+This application is based on an idea developed at https://morioh.com/a/695a25379144/full-stack-reactjs-application-with-spring-boot-and-postgresql
 
-Currently, two official plugins are available:
+## Improvements
+I made this contributions to the original idea:
+- Added TypeScript on FE side
+- Added Vite features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Ideas for enhancements
+- It would be useful to add Vitest
+- Also, it could be nice to add either Zod or React Hook Form for input validations (Project is simple, no great effort for validation is required)
 
 ## Expanding the ESLint configuration
 
