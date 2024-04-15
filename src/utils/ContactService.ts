@@ -23,7 +23,7 @@ export async function getContact(id: string) {
 
 export async function updateContact(contact: Contact) {
     // the contact must contain an id. API post is able to determine if it's either a new record or an update
-    return await axios.post(API_URL, contact, HEADERS);
+    return await axios.post<Contact>(API_URL, contact, HEADERS);
 }
 
 export async function updatePhoto(formData: FormData) {

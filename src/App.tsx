@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import "react-toastify/dist/ReactToastify.css";
 import Header from "./components/Header";
 import ContactList from "./components/ContactList";
-import { Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import ContactDetail from "./components/ContactDetail";
 import { toastError } from "./utils/ToastService";
 import { ToastContainer } from "react-toastify";
@@ -18,6 +18,7 @@ import {
   getAllContacts,
   saveContact,
   updatePhoto,
+  updateContact,
 } from "./utils/ContactService";
 
 function App() {
@@ -42,7 +43,6 @@ function App() {
     try {
       setCurrentPage(page);
       const { data } = await getAllContacts({ page, size });
-      // console.log(data);
       setData(data);
     } catch (err) {
       console.log("There was an error getting the contacts " + err);
@@ -55,11 +55,10 @@ function App() {
   const toggleModal = (show: boolean) =>
     show ? modalRef.current?.showModal() : modalRef.current?.close();
 
-  const updateContact = async (contact: Contact) => {
+  const onUpdateContact = async (contact: Contact) => {
     try {
-      await saveContact(contact);
-      //const { data } = await saveContact(contact);
-      //console.log(data);
+      const { data } =  await updateContact(contact);
+      return data;
     } catch (err) {
       console.log("There was an error saving the contact " + err);
       if (err instanceof Error) {
@@ -70,9 +69,8 @@ function App() {
 
   const updateImage = async (formData: FormData) => {
     try {
-      await updatePhoto(formData);
-      // const { data } = await updatePhoto(formData);
-      // console.log(data);
+      const { data } = await updatePhoto(formData);
+      return data;
     } catch (err) {
       console.log("There was an error uploading the image " + err);
       if (err instanceof Error) {
@@ -124,7 +122,6 @@ function App() {
     event.preventDefault();
     try {
       const { data } = await saveContact(values);
-      console.log(data);
       const formData = new FormData();
       formData.append("id", data.id);
       // @ts-expect-error ignore
@@ -152,17 +149,34 @@ function App() {
   };
 
   return (
-    <>
+    <BrowserRouter>
       <Header
         toggleModal={toggleModal}
         numberOfContacts={data?.content.length ?? 0}
       />
-      <main className='main'>
-        <div className='container'>
+      <main className="main">
+        <div className="container">
           <Routes>
-            <Route path='/' element={<Navigate to={'/contacts'} />} />
-            <Route path="/contacts" element={<ContactList data={data} currentPage={currentPage} fetchAllContacts={fetchContacts} />} />
-            <Route path="/contacts/:id" element={<ContactDetail updateContact={updateContact} updateImage={updateImage} />} />
+            <Route path="/" element={<Navigate to={"/contacts"} />} />
+            <Route
+              path="/contacts"
+              element={
+                <ContactList
+                  data={data}
+                  currentPage={currentPage}
+                  fetchAllContacts={fetchContacts}
+                />
+              }
+            />
+            <Route
+              path="/contacts/:id"
+              element={
+                <ContactDetail
+                  updateContact={onUpdateContact}
+                  updateImage={updateImage}
+                />
+              }
+            />
           </Routes>
         </div>
       </main>
@@ -265,7 +279,7 @@ function App() {
         </div>
       </dialog>
       <ToastContainer />
-    </>
+    </BrowserRouter>
   );
 }
 

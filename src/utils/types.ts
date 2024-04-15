@@ -32,8 +32,8 @@ export type ContactListProps = {
 };
 
 export type ContactDetailProps = {
-    updateContact: (contact: Contact) => Promise<void>;
-    updateImage: (formData: FormData) => Promise<void>;
+    updateContact: (contact: Contact) => Promise<Contact | undefined>;
+    updateImage: (formData: FormData) => Promise<string | undefined>;
 };
 
 export const SIZE = 5;

@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import { toastError, toastSuccess } from "../utils/ToastService";
 import { getContact } from "../utils/ContactService";
@@ -96,10 +96,11 @@ const ContactDetail = ({ updateContact, updateImage }: ContactDetailProps) => {
       formData.append("file", file, file.name);
       // @ts-expect-error ignore TS check
       formData.append("id", id);
-      await updateImage(formData);
+      const photoPath = await updateImage(formData);
       setCurrentContact((prev) => ({
         ...prev,
-        photoUrl: `${prev.photoUrl}?updated_at=${new Date().getTime()}`,
+        //photoUrl: `${prev.photoUrl}?updated_at=${new Date().getTime()}`,
+        photoUrl: photoPath,
       }));
       toastSuccess("Photo updated");
     } catch (err) {
@@ -109,6 +110,11 @@ const ContactDetail = ({ updateContact, updateImage }: ContactDetailProps) => {
       }
     }
   };
+
+  useEffect(() => {
+    // @ts-expect-error ignore TS check
+    fetchContact(id);
+  }, [id]);
 
   return (
     <>
